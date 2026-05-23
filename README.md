@@ -12,15 +12,143 @@
 - 이어받기 지원 (`--skip-existing`).
 - 외부 의존성 3개 (`requests`, `beautifulsoup4`, `markdownify`)만.
 
-## 설치
+## 설치 (개발자용)
 
 ```bash
-git clone https://github.com/<YOUR_GITHUB>/naver-blog-md.git
+git clone https://github.com/jayce-jongseok-im/naver-blog-md.git
 cd naver-blog-md
 pip install -r requirements.txt
 ```
 
 Python 3.10 이상 권장.
+
+---
+
+## 처음 써보시는 분들을 위한 안내 (비개발자용)
+
+Python을 처음 설치하시거나, 터미널·명령창을 잘 안 써보신 분들을 위한 한 단계씩 가이드입니다. 천천히 따라오시면 10분 안에 백업 시작할 수 있어요.
+
+### A. Windows 사용자
+
+#### 1단계 — Python 설치
+
+1. 작업표시줄의 **시작 메뉴**를 클릭하고 `Microsoft Store`를 검색 → 실행
+2. Store에서 `Python 3.12` 검색
+3. 가장 위에 나오는 Python 3.12(또는 최신 버전)를 클릭 → **받기** 버튼 클릭
+4. 설치 끝날 때까지 기다림 (1-2분)
+
+#### 2단계 — 도구 다운로드
+
+1. 브라우저에서 https://github.com/jayce-jongseok-im/naver-blog-md 접속
+2. 페이지 오른쪽 위 초록색 **Code** 버튼 클릭
+3. **Download ZIP** 클릭 → 파일이 다운로드됨
+4. 다운로드 폴더에서 `naver-blog-md-main.zip` 우클릭 → **압축 풀기** → 원하는 위치 (예: 바탕화면)
+
+#### 3단계 — 명령창 열기
+
+1. 압축을 푼 `naver-blog-md-main` 폴더를 더블클릭으로 열기
+2. 폴더 안에서 **주소창 클릭** (위쪽 파일경로 부분)
+3. 거기에 `cmd` 라고 입력하고 Enter → 검은색 명령창이 열림 (이게 "터미널"이에요)
+
+#### 4단계 — 필요한 거 한 번만 설치
+
+명령창에 아래를 한 줄씩 복사·붙여넣고 Enter:
+
+```
+pip install -r requirements.txt
+```
+
+설치 메시지가 쭉 나오다가 끝나면 OK.
+
+#### 5단계 — 실제 백업 실행
+
+본인 블로그 ID 확인: 본인 블로그 주소가 `https://blog.naver.com/abc1234` 라면 ID는 `abc1234`.
+
+먼저 카테고리만 살펴보기:
+
+```
+python naver_blog_md.py abc1234 --scan-only
+```
+
+→ 블로그의 카테고리 목록과 글 수가 보임. 어떤 카테고리가 있는지 확인 가능.
+
+전체 백업 (전부 받기):
+
+```
+python naver_blog_md.py abc1234
+```
+
+→ 같은 폴더 안에 `posts` 폴더가 생기고, 글 하나당 마크다운 파일 하나씩 저장됩니다.
+
+---
+
+### B. Mac 사용자
+
+#### 1단계 — Python 확인 (대부분 이미 있음)
+
+Mac에는 기본적으로 Python이 깔려 있어요. 확인하려면 **Spotlight**(Cmd+Space) → `터미널` 입력 → 실행 → 아래 명령:
+
+```
+python3 --version
+```
+
+`Python 3.10` 이상이 나오면 OK. 만약 안 나오면 https://www.python.org/downloads/ 에서 최신 버전 설치.
+
+#### 2단계 — 도구 다운로드
+
+1. https://github.com/jayce-jongseok-im/naver-blog-md 접속
+2. 초록색 **Code** 버튼 → **Download ZIP**
+3. 다운로드 폴더의 ZIP 파일 더블클릭 → 자동으로 압축이 풀림
+4. 풀린 `naver-blog-md-main` 폴더를 원하는 곳으로 이동 (예: 바탕화면)
+
+#### 3단계 — 터미널 열기
+
+1. Spotlight (Cmd+Space) → `터미널` 입력 → Enter
+2. 터미널이 열리면 아래 입력:
+
+```
+cd ~/Desktop/naver-blog-md-main
+```
+
+(바탕화면에 두셨을 경우. 다른 위치라면 그 경로로)
+
+#### 4단계 — 필요한 거 설치
+
+```
+pip3 install -r requirements.txt
+```
+
+#### 5단계 — 실제 백업
+
+```
+python3 naver_blog_md.py 본인블로그ID --scan-only
+python3 naver_blog_md.py 본인블로그ID
+```
+
+---
+
+### 자주 묻는 질문 (FAQ)
+
+**Q. 다른 사람 블로그도 받을 수 있나요?**
+가능하지만 **하지 마세요**. 저작권·이용약관 위반입니다. 본인 블로그만 백업하세요.
+
+**Q. 중간에 끊겼어요. 처음부터 다시 받아야 하나요?**
+아니요. 같은 명령에 `--skip-existing` 만 추가하면 이미 받은 글은 건너뜁니다.
+
+```
+python naver_blog_md.py abc1234 --skip-existing
+```
+
+**Q. 사진은 같이 받아지나요?**
+사진 URL은 마크다운 안에 그대로 들어가지만, 사진 파일 자체를 로컬로 다운로드하지는 않습니다. (네이버 서버에서 계속 호스팅 중이라는 전제)
+
+**Q. 비공개/이웃공개 글도 받아지나요?**
+공개 글만 안정적으로 받아져요. 비공개 글의 동작은 보장하지 않습니다.
+
+**Q. 막혀요. 도움이 필요해요.**
+이 GitHub 저장소 상단의 **Issues** 탭에서 새 이슈를 만들어 상황을 적어주시거나, 도구를 공유한 곳(스레드/블로그)에 댓글로 알려주세요.
+
+---
 
 ## 빠른 시작
 
